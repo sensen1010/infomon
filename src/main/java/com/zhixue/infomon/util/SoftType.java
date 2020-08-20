@@ -2,6 +2,6 @@ package com.zhixue.infomon.util;
 
 public enum SoftType {
 
-    BACK,FRONT,APK;
+    BACK,FRONT,APK
 
 }

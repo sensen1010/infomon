@@ -21,15 +21,15 @@ import java.util.*;
 public class IFileUpService implements FileUpService {
 
 
-    private String UPLOAD_FOLDER = "E:\\imgfile\\file";
-    private String BACKPATH = "\\webapps\\back\\";
-    private String FRONTPATH = "\\webapps\\front\\";
-    private String APKPATH = "\\webapps\\apk\\";
+//    private String UPLOAD_FOLDER = "E:\\imgfile\\file";
+//    private String BACKPATH = "\\back\\";
+//    private String FRONTPATH = "\\front\\";
+//    private String APKPATH = "\\apk\\";
 
-//    private String UPLOAD_FOLDER = System.getProperty("user.dir");
-//    private String BACKPATH = "\\webapps\\file\\back\\";
-//    private String FRONTPATH = "\\webapps\\file\\front\\";
-//    private String APKPATH = "\\webapps\\file\\apk\\";
+    private String UPLOAD_FOLDER = System.getProperty("catalina.home");
+    private String BACKPATH = "/webapps/ile/back/";
+    private String FRONTPATH = "/webapps/file/front/";
+    private String APKPATH = "/webapps/file/apk/";
 
 
     @Autowired
@@ -65,22 +65,25 @@ public class IFileUpService implements FileUpService {
                     //文件名
                     String fileName = fileMd5 + "." + upApkType;
                     //设置文件路径，
-                    int lastURL = UPLOAD_FOLDER.lastIndexOf("\\");
+                    System.out.println("linux系统获取到的路径"+UPLOAD_FOLDER);
+                   // int lastURL = UPLOAD_FOLDER.lastIndexOf("\\");
                     String upFileUrl="";
                     System.out.println("上传文件");
                     //判断上传文件类型
                     if (softType.equals(SoftType.BACK)){
-                        upFileUrl= UPLOAD_FOLDER.substring(0, lastURL) + BACKPATH;
+                        upFileUrl= UPLOAD_FOLDER + BACKPATH;
                     }else if (softType.equals(SoftType.FRONT)){
-                        upFileUrl= UPLOAD_FOLDER.substring(0, lastURL) + FRONTPATH;
+                        upFileUrl= UPLOAD_FOLDER + FRONTPATH;
                     }else if (softType.equals(SoftType.APK)){
-                        upFileUrl= UPLOAD_FOLDER.substring(0, lastURL) + APKPATH;
+                        upFileUrl= UPLOAD_FOLDER + APKPATH;
                     }else {
                         return null;
                     }
                     String filePath = upFileUrl;
                     File targetFile = new File(filePath);
+                    targetFile.setWritable(true, false);
                     if (!targetFile.exists()) {
+
                         targetFile.mkdirs();
                     }
                     File oldFile = new File(filePath + fileName);

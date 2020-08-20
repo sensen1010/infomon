@@ -6,8 +6,10 @@ public class text {
 
     public  static  void  main(String[] arge){
 
-        File file=new File("D:\\ce\\fileUp");
-        deleteFileOrDirectory(file);
+        System.out.println( System.getProperty("catalina.home"));
+
+        //File file=new File("D:\\ce\\fileUp");
+       // deleteFileOrDirectory(file);
 
     }
     public static void deleteFileOrDirectory(File file) {

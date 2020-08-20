@@ -16,7 +16,7 @@ public interface UpdateSoftRepository extends JpaRepository<UpdateSoft,Integer> 
 
     List<UpdateSoft> findAllBySoftMd5(String softMd5);
 
-    @Query(value = "select * from fron_soft where soft_type=?1 order by id DESC limit 1", nativeQuery = true)
+    @Query(value = "select * from update_soft where soft_type=?1 order by id DESC limit 1", nativeQuery = true)
     UpdateSoft findLastOne(String softType);
 
     Page<UpdateSoft> findAllBySoftType(String softType, Pageable pageable);
