@@ -33,13 +33,27 @@ public class ClientUpdateController {
     public synchronized Map<String, Object> singleFileUpload(@RequestParam("file") MultipartFile file,String type) {
         map = new HashMap<>();
         String name="";
-        System.out.println(type);
+        String fileName=file.getOriginalFilename();
+        int lastFile = fileName.lastIndexOf(".");
+        String upApkType = fileName.substring(lastFile + 1, fileName.length()).toLowerCase();
+        System.out.println(upApkType);
         if (type.equals("BACK")){
+            if (!upApkType.toLowerCase().equals("war")){
+                map.put("code", "1");
+                return map;
+            }
             name = fileUpService.softAdd(file, SoftType.BACK);
         }else if (type.equals("FRONT")){
+            if (!upApkType.toLowerCase().equals("zip")){
+                map.put("code", "1");
+                return map;
+            }
             name = fileUpService.softAdd(file, SoftType.FRONT);
         }else {
-            System.out.println("apk");
+            if (!upApkType.toLowerCase().equals("apk")){
+                map.put("code", "1");
+                return map;
+            }
             name = fileUpService.softAdd(file, SoftType.APK);
         }
         if (name == null) {

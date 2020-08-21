@@ -21,28 +21,27 @@ import java.util.*;
 public class IFileUpService implements FileUpService {
 
 
-//    private String UPLOAD_FOLDER = "E:\\imgfile\\file";
-//    private String BACKPATH = "\\back\\";
-//    private String FRONTPATH = "\\front\\";
-//    private String APKPATH = "\\apk\\";
+    private String UPLOAD_FOLDER = "E:\\imgfile\\file";
+    private String BACKPATH = "\\back\\";
+    private String FRONTPATH = "\\front\\";
+    private String APKPATH = "\\apk\\";
 
-    private String UPLOAD_FOLDER = System.getProperty("catalina.home");
-    private String BACKPATH = "/webapps/ile/back/";
-    private String FRONTPATH = "/webapps/file/front/";
-    private String APKPATH = "/webapps/file/apk/";
+//    private String UPLOAD_FOLDER = System.getProperty("catalina.home");
+//    private String BACKPATH = "webapps/file/back/";
+//    private String FRONTPATH = "webapps/file/front/";
+//    private String APKPATH = "webapps/file/apk/";
 
 
     @Autowired
     UpdateSoftRepository updateSoftRepository;
 
     @Autowired
-    UpdateSoftService backSoftService;
+    UpdateSoftService updateSoftService;
 
     Map<String, Object> myMap;
 
     @Override
     public String softAdd(MultipartFile reportFile,SoftType softType) {
-
         //上传文件的名称
         String upApkName = reportFile.getOriginalFilename();
         //截取末尾类型
@@ -58,17 +57,16 @@ public class IFileUpService implements FileUpService {
         }
         try {
             //  System.out.println(apkMd5);
-            System.out.println(softType.name());
             //查询该apk是否存在，若存在，则添加记录、不上传文件
             List<UpdateSoft> updateSofts = updateSoftRepository.findAllBySoftMd5(fileMd5);
                 if (updateSofts.size() < 1) {
                     //文件名
                     String fileName = fileMd5 + "." + upApkType;
                     //设置文件路径，
-                    System.out.println("linux系统获取到的路径"+UPLOAD_FOLDER);
+                    //System.out.println("linux系统获取到的路径"+UPLOAD_FOLDER);
                    // int lastURL = UPLOAD_FOLDER.lastIndexOf("\\");
                     String upFileUrl="";
-                    System.out.println("上传文件");
+                   // System.out.println("上传文件");
                     //判断上传文件类型
                     if (softType.equals(SoftType.BACK)){
                         upFileUrl= UPLOAD_FOLDER + BACKPATH;
@@ -94,7 +92,7 @@ public class IFileUpService implements FileUpService {
                             .softName(upApkName)
                             .softSize(reportFile.getSize() + "")
                             .downloadUrl(fileName).build();
-                    backSoftService.add(backSoft);
+                    updateSoftService.add(backSoft);
                 } else {
                     //写入信息
                     UpdateSoft backSoft = new UpdateSoft.Builder(softType.toString())
@@ -102,7 +100,7 @@ public class IFileUpService implements FileUpService {
                             .softName(updateSofts.get(0).getSoftName())
                             .softSize(updateSofts.get(0).getSoftSize())
                             .downloadUrl(updateSofts.get(0).getDownloadUrl()).build();
-                    backSoftService.add(backSoft);
+                    updateSoftService.add(backSoft);
                 }
             m.put("name", reportFile.getOriginalFilename());
             m.put("md5", fileMd5);
