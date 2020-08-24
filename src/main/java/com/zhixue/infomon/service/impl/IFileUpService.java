@@ -21,15 +21,15 @@ import java.util.*;
 public class IFileUpService implements FileUpService {
 
 
-    private String UPLOAD_FOLDER = "E:\\imgfile\\file";
-    private String BACKPATH = "\\back\\";
-    private String FRONTPATH = "\\front\\";
-    private String APKPATH = "\\apk\\";
+//    private String UPLOAD_FOLDER = "E:\\imgfile\\file";
+//    private String BACKPATH = "\\back\\";
+//    private String FRONTPATH = "\\front\\";
+//    private String APKPATH = "\\apk\\";
 
-//    private String UPLOAD_FOLDER = System.getProperty("catalina.home");
-//    private String BACKPATH = "webapps/file/back/";
-//    private String FRONTPATH = "webapps/file/front/";
-//    private String APKPATH = "webapps/file/apk/";
+    private String UPLOAD_FOLDER = System.getProperty("catalina.home");
+    private String BACKPATH = "/webapps/file/back/";
+    private String FRONTPATH = "/webapps/file/front/";
+    private String APKPATH = "/webapps/file/apk/";
 
 
     @Autowired
